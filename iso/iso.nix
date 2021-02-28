@@ -22,7 +22,6 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    b43FirmwareCutter
     b43Firmware_5_1_138
     b43Firmware_6_30_163_46
     firmwareLinuxNonfree
