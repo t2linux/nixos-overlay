@@ -6,8 +6,9 @@
 } @ args:
 
 with lib;
-buildLinux (args // rec {
+let
   kernelVersion = "5.10.12";
+in buildLinux (args // rec {
   version = "${kernelVersion}-mbp";
   modDirVersion = kernelVersion;
   extraMeta.branch = versions.majorMinor version;
