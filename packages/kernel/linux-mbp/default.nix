@@ -1,9 +1,4 @@
-{ pkgs ? import <nixpkgs> {}
-, stdenv ? pkgs.stdenv
-, lib ? stdenv.lib
-, buildLinux ? pkgs.buildLinux
-, ...
-} @ args:
+{ pkgs, stdenv, lib, buildLinux, ... } @ args:
 
 with lib;
 let
