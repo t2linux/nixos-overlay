@@ -1,4 +1,6 @@
 #!/bin/sh
-set -e
+set -euo pipefail
 
-nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
+NIXPKGS=channel:nixos-20.09
+
+nix-build '<nixpkgs/nixos>' -I nixos-config=iso.nix -I nixpkgs="${NIXPKGS}" -A config.system.build.isoImage
