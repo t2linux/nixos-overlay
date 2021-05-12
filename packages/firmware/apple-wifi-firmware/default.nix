@@ -3,9 +3,12 @@
 , macModel ? "MacBookPro15,1"
 }:
 
+let
+  normalizedModelName = lib.replaceStrings [ "," ] [ "_" ] macModel;
+in
 stdenv.mkDerivation rec {
   pname = "apple-wifi-firmware";
-  version = "big-sur-1620854225";
+  version = "big-sur-1620854225-${normalizedModelName}";
 
   src = builtins.fetchTarball {
     url = "https://d0.ee/apple/big-sur-wifi-fw-1620854225.tar.zstd";
@@ -70,7 +73,7 @@ stdenv.mkDerivation rec {
 
   installPhase =
     let
-      attrName = lib.replaceStrings [ "," ] [ "_" ] macModel;
+      attrName = normalizedModelName;
       selectedFw = passthru.firmwareMappings.${attrName};
       modelName = "Apple Inc.-${selectedFw.name}";
     in
