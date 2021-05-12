@@ -3,8 +3,15 @@ set -euo pipefail
 
 NIXPKGS=channel:nixos-20.09
 
+wififw_models=(
+	MacBookPro15,1
+	MacBookPro15,2
+	MacBookPro15,3
+	MacBookPro16,1
+	MacBookPro16,2
+)
+
 packages=(
-	firmware/apple-wifi-firmware
 	kernel/linux-mbp
 )
 
@@ -13,14 +20,24 @@ modules=(
 	apple-ib-drv
 )
 
-built_packages=()
-built_modules=()
+built_drvs=()
 
 for p in ${packages[@]}; do
 	echo ">>> Building '${p}'"
 
 	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; in pkgs.callPackage ./packages/'"${p}"' {}')"
-	built_packages+=(${drv})
+	built_drvs+=(${drv})
+
+	echo ">>> Built '${p}' (-> '${drv}')"
+	du -sh "${drv}"
+done
+
+for model in ${wififw_models[@]}; do
+	p='firmware/apple-wifi-firmware'
+	echo ">>> Building '${p}' for model '${model}'"
+
+	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; in pkgs.callPackage ./packages/'"${p}"' { macModel = "'"${model}"'"; }')"
+	built_drvs+=(${drv})
 
 	echo ">>> Built '${p}' (-> '${drv}')"
 	du -sh "${drv}"
@@ -30,18 +47,14 @@ for p in ${modules[@]}; do
 	echo ">>> Building '${p}'"
 
 	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; mbp = pkgs.callPackage ./packages/kernel/linux-mbp {}; in pkgs.callPackage ./packages/kernel-modules/'"${p}"' { kernel = mbp; }')"
-	built_packages+=(${drv})
+	built_drvs+=(${drv})
 
 	echo ">>> Built '${p}' (-> '${drv}')"
 	du -sh "${drv}"
 done
 
 if [ -n "${CACHIX_AUTH_TOKEN}" ] && [ -n "${CACHIX_SIGNING_KEY}" ]; then
-	for d in ${built_packages[@]}; do
-		cachix push t2linux "${d}"
-	done
-
-	for d in ${built_modules[@]}; do
+	for d in ${built_drvs[@]}; do
 		cachix push t2linux "${d}"
 	done
 fi
