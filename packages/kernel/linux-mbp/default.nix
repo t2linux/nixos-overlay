@@ -62,8 +62,8 @@ buildLinux (args // rec {
         ./8001-brcmfmac-Add-initial-support-for-the-BRCM4355.patch
         ./8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
 
-	# MacBookPro16,1/2 WIFI support
-	./wifi-bigsur.patch
+        # MacBookPro16,1/2 WIFI support
+        ./wifi-bigsur.patch
       ];
     in
     (map (x: { name = baseNameOf x; patch = x; }) mbpPatches) ++ [
