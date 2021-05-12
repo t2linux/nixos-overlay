@@ -3,14 +3,16 @@
 , macModel ? "MacBookPro15,1"
 }:
 let
+  macOSRelease = "big-sur";
+  firmwareTimestamp = "1620854225";
   normalizedModelName = lib.replaceStrings [ "," ] [ "_" ] macModel;
 in
 stdenv.mkDerivation rec {
   pname = "apple-wifi-firmware";
-  version = "big-sur-1620854225-${normalizedModelName}";
+  version = "${macOSRelease}-${firmwareTimestamp}-${normalizedModelName}";
 
   src = builtins.fetchTarball {
-    url = "https://d0.ee/apple/big-sur-wifi-fw-1620854225.tar.zstd";
+    url = "https://d0.ee/apple/${macOSRelease}-wifi-fw-${firmwareTimestamp}.tar.zstd";
     sha256 = "023c19v6m5yf9zad81rkz5l4p21rc2p3jqgyyayykhqsxgh3y70i";
   };
 
