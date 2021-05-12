@@ -5,7 +5,7 @@
 
   # Use custom kernel
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux-mbp;
-  boot.extraModulePackages = [ pkgs.apple-bce ];
+  boot.extraModulePackages = with pkgs; [ apple-bce apple-ib-drv ];
 
   # Use GRUB
   boot.loader.efi.canTouchEfiVariables = false;
