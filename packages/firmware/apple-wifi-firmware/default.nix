@@ -68,6 +68,16 @@ stdenv.mkDerivation rec {
       regulatory = "C-4364__s-B3/trinidad-X0.clmb";
       nvram = "C-4364__s-B3/P-trinidad-X0_M-HRPN_V-u__m-7.7.txt";
     };
+
+    # ?
+    MacBookAir8_1 = {
+      name = "MacBookAir8,1";
+      base = "brcmfmac4355-pcie";
+
+      firmware = "C-4355__s-C1/hawaii.trx";
+      regulatory = "C-4355__s-C1/hawaii-X0.clmb";
+      nvram = "C-4355__s-C1/P-hawaii-X0_M-YSBC_V-m__m-2.5.txt";
+    };
   };
 
   installPhase =
