@@ -2,7 +2,6 @@
 , stdenv
 , macModel ? "MacBookPro15,1"
 }:
-
 let
   normalizedModelName = lib.replaceStrings [ "," ] [ "_" ] macModel;
 in
