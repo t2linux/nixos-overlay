@@ -11,6 +11,9 @@
   # Load Apple hardware modules early
   boot.initrd.kernelModules = [ "apple_bce" "apple-ibridge" "apple-ib-tb" ];
 
+  # Include wifi firmware
+  hardware.firmware = [ pkgs.apple-wifi-firmware ];
+
   # Use GRUB
   boot.loader.efi.canTouchEfiVariables = false;
   boot.loader.grub = {

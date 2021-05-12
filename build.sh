@@ -4,6 +4,7 @@ set -euo pipefail
 NIXPKGS=channel:nixos-20.09
 
 packages=(
+	firmware/apple-wifi-firmware
 	kernel/linux-mbp
 )
 

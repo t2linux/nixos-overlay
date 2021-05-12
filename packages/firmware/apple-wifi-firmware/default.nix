@@ -1,20 +1,22 @@
-{ pkgs ? import <nixpkgs> { }
-, lib ? pkgs.lib
-, stdenv ? pkgs.stdenv
-, ...
-}:
+{ lib, stdenv }:
 
 stdenv.mkDerivation rec {
   pname = "apple-wifi-firmware";
-  version = "not-done-yet";
+  version = "mojave";
 
-  srcs = [ ];
+  src = builtins.fetchTarball {
+    url = "https://d0.ee/nixos/mojave-firmware.tar.zstd";
+    sha256 = "128mfjjpw9a5s0ybcrq0dn7s55pgzn997j31szs4v68k7wp80227";
+  };
+
+  sourceRoot = "fw";
 
   phases = [ "installPhase" ];
 
   installPhase = ''
-
+    mkdir -p $out/lib/firmware
+    cp $src/* $out/lib/firmware/
   '';
 
-  meta.broken = true;
+  meta.license = lib.licenses.unfree;
 }
