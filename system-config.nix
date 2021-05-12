@@ -14,6 +14,9 @@
   # Include wifi firmware
   hardware.firmware = [ pkgs.apple-wifi-firmware ];
 
+  # Allow unfree - wifi firmware won't be installed otherwise.
+  nixpkgs.config.allowUnfree = true;
+
   # Use GRUB
   boot.loader.efi.canTouchEfiVariables = false;
   boot.loader.grub = {
