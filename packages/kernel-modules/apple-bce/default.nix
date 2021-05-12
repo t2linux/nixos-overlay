@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   name = "apple-bce-${version}-${kernel.version}";
-  gitCommit = "839131c386aa53171fe01e540cca4248f86b1528";
+  gitCommit = "e1cd77ef4736df9e452cb26f85ee81a5349f8f1e";
   version = "${gitCommit}";
 
   src = fetchFromGitHub {
     owner = "mikroskeem";
     repo = "mbp2018-bridge-drv";
     rev = "${gitCommit}";
-    sha256 = "0s3p4vss7dkd24r26kfcg7vfc3sw6p7vyahz83vj0bb532sck7jm";
+    sha256 = "1sf9pzrvvgc9mr0fqjcg6rwxp4j4qv8rdpg7nj8l5nzaj6z0awdj";
   };
 
   hardeningDisable = [ "pic" "format" ];
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   makeFlags = [
     "KERNELRELEASE=${kernel.modDirVersion}"
-    "KERNEL_DIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
     "INSTALL_MOD_PATH=$(out)"
   ];
 }

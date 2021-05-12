@@ -5,6 +5,7 @@
 
   # Use custom kernel
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux-mbp;
+  boot.extraModulePackages = [ pkgs.apple-bce ];
 
   # Use GRUB
   boot.loader.efi.canTouchEfiVariables = false;
