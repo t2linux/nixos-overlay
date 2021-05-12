@@ -1,11 +1,15 @@
 { pkgs, config, ... }:
 {
   # Improves system stability - https://canary.discord.com/channels/595304521857630254/595304521857630259/809475825589026826
-  boot.kernelParams = [ "intel_iommu=on" ];
+  # Disable built in audio, as it's not working that well - 2021-05-12
+  boot.kernelParams = [ "intel_iommu=on" "apple_bce.aaudio_enabled=0" ];
 
   # Use custom kernel
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux-mbp;
   boot.extraModulePackages = with pkgs; [ apple-bce apple-ib-drv ];
+
+  # Load Apple hardware modules early
+  boot.initrd.kernelModules = [ "apple_bce" "apple-ibridge" "apple-ib-tb" ];
 
   # Use GRUB
   boot.loader.efi.canTouchEfiVariables = false;
