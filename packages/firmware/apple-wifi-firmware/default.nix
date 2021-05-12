@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
   phases = [ "installPhase" ];
 
   installPhase = ''
-    mkdir -p $out/lib/firmware
-    cp $src/* $out/lib/firmware/
+    mkdir -p $out/lib/firmware/brcm
+    cp $src/* $out/lib/firmware/brcm/
   '';
 
   meta.license = lib.licenses.unfree;
