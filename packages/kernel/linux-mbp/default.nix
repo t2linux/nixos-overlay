@@ -2,7 +2,7 @@
 
 with lib;
 let
-  kernelVersion = "5.10.12";
+  kernelVersion = "5.10.36";
 in
 buildLinux (args // rec {
   version = "${kernelVersion}-mbp";
@@ -11,7 +11,7 @@ buildLinux (args // rec {
 
   src = pkgs.fetchurl {
     url = "mirror://kernel/linux/kernel/v5.x/linux-${kernelVersion}.tar.xz";
-    sha256 = "1an460q3affd7gmd6fqv8g37j3z2fnmq19iy677k8kxb2wl4yi8x";
+    sha256 = "0s5jw7y17hnl66iybw6f4pbc5j5rilphqbv3iql22wq053vyg749";
   };
 
   # Set up kernel patches
@@ -25,7 +25,6 @@ buildLinux (args // rec {
         # Arch Linux patches
         ./0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
         ./0002-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
-        ./0003-iwlwifi-provide-gso_type-to-GSO-packets.patch
 
         # Hack for AMD DC eDP link rate bug
         ./2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
