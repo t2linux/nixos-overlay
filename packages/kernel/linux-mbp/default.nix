@@ -44,8 +44,9 @@ buildLinux (args // rec {
         ./4004-HID-apple-Add-support-for-MacBookPro15-1-keyboard-tr.patch
         ./4005-HID-apple-Add-support-for-MacBookPro15-4-keyboard-tr.patch
         ./4006-HID-apple-Add-support-for-MacBookPro16-2-keyboard-tr.patch
-        ./4007-HID-apple-Add-support-for-MacBookAir9-1-keyboard-tra.patch
-        ./4008-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
+        ./4007-HID-apple-Add-support-for-MacBookPro16-3-keyboard-tr.patch
+        ./4008-HID-apple-Add-support-for-MacBookAir9-1-keyboard-tra.patch
+        ./4009-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
 
         # Broadcom Wifi rambase debugging additions
         ./5001-brcmfmac-move-brcmf_mp_device-into-its-own-header.patch
