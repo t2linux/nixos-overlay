@@ -55,7 +55,7 @@ for p in ${modules[@]}; do
 	du -sh "${drv}"
 done
 
-if [ -n "${CACHIX_AUTH_TOKEN}" ] && [ -n "${CACHIX_SIGNING_KEY}" ]; then
+if [ -n "${CACHIX_AUTH_TOKEN:-}" ] && [ -n "${CACHIX_SIGNING_KEY:-}" ]; then
 	for d in ${built_drvs[@]}; do
 		cachix push t2linux "${d}"
 	done
