@@ -5,6 +5,7 @@ NIXPKGS=channel:nixos-20.09
 
 wififw_models=(
 	MacBookAir8,1
+	MacBookAir9,1
 	MacBookPro15,1
 	MacBookPro15,2
 	MacBookPro15,3

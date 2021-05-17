@@ -80,6 +80,16 @@ stdenv.mkDerivation rec {
       regulatory = "C-4355__s-C1/hawaii-X0.clmb";
       nvram = "C-4355__s-C1/P-hawaii-X0_M-YSBC_V-m__m-2.5.txt";
     };
+
+    # Big Sur, 2021-05-17
+    MacBookAir9_1 = {
+      name = "MacBookAir9,1";
+      base = "brcmfmac4377-pcie";
+
+      firmware = "C-4377__s-B3/fiji.trx";
+      regulatory = "C-4377__s-B3/fiji-X3.clmb";
+      nvram = "C-4377__s-B3/P-fiji-X3_M-SPPR_V-u__m-3.1.txt";
+    };
   };
 
   installPhase =
