@@ -18,6 +18,7 @@ jobs:
         uses: cachix/cachix-action@v10
         with:
           name: t2linux
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: "Build kernel, modules and firmware"
         env:
