@@ -18,11 +18,12 @@ jobs:
         uses: cachix/cachix-action@v10
         with:
           name: t2linux
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          skipPush: true
 
       - name: "Build kernel, modules and firmware"
         env:
           NIXPKGS_ALLOW_UNFREE: "1"
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: |
           ./build.sh
 
