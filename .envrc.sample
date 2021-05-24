@@ -1,3 +1,2 @@
 export CACHIX_AUTH_TOKEN=''
-export CACHIX_SIGNING_KEY=''
 use nix
