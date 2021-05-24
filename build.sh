@@ -28,7 +28,7 @@ for p in ${packages[@]}; do
 	echo ">>> Building '${p}'"
 
 	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; in pkgs.callPackage ./packages/'"${p}"' {}')"
-	built_drvs+=(${drv})
+	built_drvs+=($(nix show-derivation "${drv}" | jq -r '.[keys[0]].outputs | .[].path'))
 
 	echo ">>> Built '${p}' (-> '${drv}')"
 	du -sh "${drv}"
@@ -39,7 +39,7 @@ for model in ${wififw_models[@]}; do
 	echo ">>> Building '${p}' for model '${model}'"
 
 	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; in pkgs.callPackage ./packages/'"${p}"' { macModel = "'"${model}"'"; }')"
-	built_drvs+=(${drv})
+	built_drvs+=($(nix show-derivation "${drv}" | jq -r '.[keys[0]].outputs | .[].path'))
 
 	echo ">>> Built '${p}' (-> '${drv}')"
 	du -sh "${drv}"
@@ -49,7 +49,7 @@ for p in ${modules[@]}; do
 	echo ">>> Building '${p}'"
 
 	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; mbp = pkgs.callPackage ./packages/kernel/linux-mbp {}; in pkgs.callPackage ./packages/kernel-modules/'"${p}"' { kernel = mbp; }')"
-	built_drvs+=(${drv})
+	built_drvs+=($(nix show-derivation "${drv}" | jq -r '.[keys[0]].outputs | .[].path'))
 
 	echo ">>> Built '${p}' (-> '${drv}')"
 	du -sh "${drv}"
