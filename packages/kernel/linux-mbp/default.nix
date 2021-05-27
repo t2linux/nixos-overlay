@@ -2,7 +2,7 @@
 
 with lib;
 let
-  kernelVersion = "5.11.22";
+  kernelVersion = "5.12.6";
 in
 buildLinux (args // rec {
   version = "${kernelVersion}-mbp";
@@ -11,7 +11,7 @@ buildLinux (args // rec {
 
   src = pkgs.fetchurl {
     url = "mirror://kernel/linux/kernel/v5.x/linux-${kernelVersion}.tar.xz";
-    sha256 = "003nlphkqish6l4xblhi369v4qv2zck7529prkdnx4gb2ihpq0hi";
+    sha256 = "1cdxda5mgdi5dky6hvrq2727rrlw9lnzf30kf3lbiikjybvlqw2b";
   };
 
   # Set up kernel patches
@@ -24,7 +24,7 @@ buildLinux (args // rec {
       mbpPatches = [
         # Arch Linux patches
         ./0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-        ./0002-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
+        ./0002-drm-i915-gt-Disable-HiZ-Raw-Stall-Optimization-on-br.patch
 
         # Hack for AMD DC eDP link rate bug
         ./2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
