@@ -11,7 +11,7 @@ jobs:
       - name: "Install Nix"
         uses: cachix/install-nix-action@v13
         with:
-          nix_path: nixpkgs=channel:nixos-20.09
+          nix_path: nixpkgs=channel:nixos-21.05
 
       - name: "Set up t2linux binary cache"
         if: "!contains(github.event.head_commit.message, '[no cache]')"
