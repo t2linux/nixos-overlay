@@ -2,7 +2,7 @@
 
 with lib;
 let
-  kernelVersion = "5.12.7";
+  kernelVersion = "5.12.8";
 in
 buildLinux (args // rec {
   version = "${kernelVersion}-mbp";
@@ -11,7 +11,7 @@ buildLinux (args // rec {
 
   src = pkgs.fetchurl {
     url = "mirror://kernel/linux/kernel/v5.x/linux-${kernelVersion}.tar.xz";
-    sha256 = "0ircrclggrbmm80vz7irhg73qvhjddsmf7zclw5cqnnmm3qfj8jk";
+    sha256 = "134g8d5zvbzdqxy7z6a527dqcmiq4ixf7s05rnnsc4qcajpbcimd";
   };
 
   # Set up kernel patches
