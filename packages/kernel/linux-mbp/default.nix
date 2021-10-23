@@ -2,7 +2,7 @@
 
 with lib;
 let
-  kernelVersion = "5.12.11";
+  kernelVersion = "5.14.13";
 in
 buildLinux (args // rec {
   version = "${kernelVersion}-mbp";
@@ -11,7 +11,7 @@ buildLinux (args // rec {
 
   src = pkgs.fetchurl {
     url = "mirror://kernel/linux/kernel/v5.x/linux-${kernelVersion}.tar.xz";
-    sha256 = "0ykzyvb4c6mqcy0fl3wvpn4laj1cllsg80dxnv0gssjz6q836z5f";
+    sha256 = "0kcn9g5jyd043f75wk3k34j430callzhw5jh1if9zacqq2s7haw3";
   };
 
   # Set up kernel patches
@@ -20,10 +20,11 @@ buildLinux (args // rec {
       # Import patches what NixOS offers
       nixPatches = pkgs.callPackage <nixpkgs/pkgs/os-specific/linux/kernel/patches.nix> { };
 
-      # https://github.com/aunali1/linux-mbp-arch/blob/master/PKGBUILD
+      # https://github.com/jamlam/mbp-16.1-linux-wifi/blob/main/PKGBUILD
       mbpPatches = [
         # Arch Linux patches
         ./0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
+        ./0002-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
 
         # Hack for AMD DC eDP link rate bug
         ./2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -47,22 +48,19 @@ buildLinux (args // rec {
         ./4008-HID-apple-Add-support-for-MacBookAir9-1-keyboard-tra.patch
         ./4009-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
 
-        # Broadcom Wifi rambase debugging additions
-        ./5001-brcmfmac-move-brcmf_mp_device-into-its-own-header.patch
-        ./5002-brcmfmac-Add-ability-to-manually-specify-FW-rambase-.patch
-
         # MBP Peripheral support
-        ./6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch # UVC Camera support
+        ./6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch       # UVC Camera support
 
         # Hack for i915 overscan issues
         ./7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
 
         # Broadcom WIFI/BT device support
-        ./8001-brcmfmac-Add-initial-support-for-the-BRCM4355.patch
-        ./8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
+        ./8001-corellium-wifi-bigsur.patch
+        ./8002-Add-support-for-BCM4377.patch
+        ./8003-Add-support-for-BCM4355.patch
 
-        # MacBookPro16,1/2 WIFI support
-        ./wifi-bigsur.patch
+        ./9001-bluetooth-add-disable-read-tx-power-quirk.patch
+        ./9002-add-bluetooth-support-for-16-2.patch
       ];
     in
     (map (x: { name = baseNameOf x; patch = x; }) mbpPatches) ++ [
