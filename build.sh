@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+: "${NIXPKGS}"
+
 wififw_models=(
 	MacBookAir8,1
 	MacBookAir9,1
