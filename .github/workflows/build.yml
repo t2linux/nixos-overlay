@@ -3,6 +3,9 @@ on:
   push:
 jobs:
   build:
+    strategy:
+      matrix:
+        channel: ["channel:nixos-21.05", "channel:nixos-unstable"]
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
@@ -11,7 +14,7 @@ jobs:
       - name: "Install Nix"
         uses: cachix/install-nix-action@v13
         with:
-          nix_path: nixpkgs=channel:nixos-21.05
+          nix_path: nixpkgs=${{ matrix.channel }}
 
       - name: "Set up t2linux binary cache"
         if: "!contains(github.event.head_commit.message, '[no cache]')"
@@ -23,6 +26,7 @@ jobs:
       - name: "Build kernel, modules and firmware"
         env:
           NIXPKGS_ALLOW_UNFREE: "1"
+          NIXPKGS: ${{ matrix.channel }}
         run: |
           ./build.sh
 
