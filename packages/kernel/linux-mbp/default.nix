@@ -49,7 +49,7 @@ buildLinux (args // rec {
         ./4009-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
 
         # MBP Peripheral support
-        ./6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch       # UVC Camera support
+        ./6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch # UVC Camera support
 
         # Hack for i915 overscan issues
         ./7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
