@@ -7,8 +7,9 @@
 
   outputs = { self, nixpkgs }: rec {
     overlay = import ./overlay.nix;
-    nixosModule = import ./modules/wifi-fw-selection.nix;
+    nixosModule = import ./system-config.nix;
 
-    nixosModules.wifi-firmware-selection = nixosModule;
+    nixosModules.wifi-firmware-selection = import ./modules/wifi-fw-selection.nix;
+    nixosModules.opinionatedConfiguration = nixosModule;
   };
 }
