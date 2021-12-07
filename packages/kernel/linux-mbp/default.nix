@@ -3,6 +3,7 @@
 with lib;
 let
   kernelVersion = "5.14.13";
+  kernelPatches' = kernelPatches;
 in
 buildLinux (args // rec {
   version = "${kernelVersion}-mbp";
@@ -58,7 +59,7 @@ buildLinux (args // rec {
     ./9002-add-bluetooth-support-for-16-2.patch
   ])
   ++ [
-    kernelPatches.bridge_stp_helper
-    kernelPatches.request_key_helper
+    kernelPatches'.bridge_stp_helper
+    kernelPatches'.request_key_helper
   ];
 } // (args.argsOverride or { }))
