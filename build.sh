@@ -32,7 +32,7 @@ for p in ${packages[@]}; do
 	echo ">>> Building '${p}'"
 
 	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; in pkgs.callPackage ./packages/'"${p}"' {}')"
-	built_drvs+=($(nix show-derivation "${drv}" | jq -r '.[keys[0]].outputs | .[].path'))
+	built_drvs+=($(nnix show-derivation "${drv}" | jq -r '.[keys[0]].outputs | .[].path'))
 
 	echo ">>> Built '${p}' (-> '${drv}')"
 	du -sh "${drv}"
