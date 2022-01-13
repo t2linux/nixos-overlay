@@ -1,5 +1,6 @@
 { lib
 , stdenv
+, fetchurl
 , macModel ? "MacBookPro15,1"
 }:
 let
@@ -11,12 +12,12 @@ stdenv.mkDerivation rec {
   pname = "apple-wifi-firmware";
   version = "${macOSRelease}-${firmwareTimestamp}-${normalizedModelName}";
 
-  src = builtins.fetchTarball {
-    url = "https://d0.ee/apple/${macOSRelease}-wifi-fw-${firmwareTimestamp}.tar.zstd";
-    sha256 = "023c19v6m5yf9zad81rkz5l4p21rc2p3jqgyyayykhqsxgh3y70i";
+  src = fetchurl {
+    url = "https://d0.ee/apple/${macOSRelease}-wifi-fw-${firmwareTimestamp}.tar.xz";
+    sha256 = "sha256-YMeC8q+eccGkOUYR5hnNolKStpmcr6E4RVLdaHOiN2w=";
   };
 
-  phases = [ "installPhase" ];
+  phases = [ "unpackPhase" "installPhase" ];
 
   passthru.firmwareMappings = rec {
     # Big Sur, 2021-05-13
@@ -99,11 +100,15 @@ stdenv.mkDerivation rec {
       modelName = "Apple Inc.-${selectedFw.name}";
     in
     ''
+      runHook preInstall
+
       mkdir -p $out/lib/firmware/brcm
 
-      cp -L $src/${selectedFw.firmware} $out/lib/firmware/brcm/${selectedFw.base}.bin
-      cp -L $src/${selectedFw.regulatory} $out/lib/firmware/brcm/${selectedFw.base}.clm_blob
-      cp -L $src/${selectedFw.nvram} $out/lib/firmware/brcm/${selectedFw.base}.'${modelName}'.txt
+      cp -L ${selectedFw.firmware} $out/lib/firmware/brcm/${selectedFw.base}.bin
+      cp -L ${selectedFw.regulatory} $out/lib/firmware/brcm/${selectedFw.base}.clm_blob
+      cp -L ${selectedFw.nvram} $out/lib/firmware/brcm/${selectedFw.base}.'${modelName}'.txt
+
+      runHook postInstall
     '';
 
   meta.license = lib.licenses.unfree;
