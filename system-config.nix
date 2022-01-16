@@ -1,12 +1,8 @@
 { pkgs, config, ... }:
 {
-  imports = [
-    ./modules/wifi-fw-selection.nix
-  ];
-
   # Improves system stability - https://canary.discord.com/channels/595304521857630254/595304521857630259/809475825589026826
   # Disable built in audio, as it's not working that well - 2021-05-12
-  boot.kernelParams = [ "intel_iommu=on" "apple_bce.aaudio_enabled=0" ];
+  boot.kernelParams = [ "intel_iommu=on" "iommu=pt" "apple_bce.aaudio_enabled=0" ];
 
   # Use custom kernel
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux-mbp;
@@ -16,8 +12,7 @@
   boot.initrd.kernelModules = [ "apple_bce" "apple-ibridge" "apple-ib-tb" ];
 
   # Include wifi firmware
-  hardware.appleWifiFirmware.model = "MacBookPro15,1";
-  hardware.firmware = [ (pkgs.apple-wifi-firmware.override { macModel = config.hardware.appleWifiFirmware.model; }) ];
+  hardware.firmware = [ (pkgs.apple-wifi-firmware) ];
 
   # Allow unfree - wifi firmware won't be installed otherwise.
   nixpkgs.config.allowUnfree = true;

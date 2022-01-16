@@ -3,18 +3,9 @@ set -euo pipefail
 
 : "${NIXPKGS}"
 
-wififw_models=(
-	MacBookAir8,1
-	MacBookAir9,1
-	MacBookPro15,1
-	MacBookPro15,2
-	MacBookPro15,3
-	MacBookPro16,1
-	MacBookPro16,2
-)
-
 packages=(
 	kernel/linux-mbp
+	firmware/apple-wifi-firmware
 )
 
 modules=(
@@ -32,17 +23,6 @@ for p in ${packages[@]}; do
 	echo ">>> Building '${p}'"
 
 	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; in pkgs.callPackage ./packages/'"${p}"' {}')"
-	built_drvs+=($(nnix show-derivation "${drv}" | jq -r '.[keys[0]].outputs | .[].path'))
-
-	echo ">>> Built '${p}' (-> '${drv}')"
-	du -sh "${drv}"
-done
-
-for model in ${wififw_models[@]}; do
-	p='firmware/apple-wifi-firmware'
-	echo ">>> Building '${p}' for model '${model}'"
-
-	drv="$(nix-build --no-out-link -I nixpkgs="${NIXPKGS}" -E 'let pkgs = import <nixpkgs> {}; in pkgs.callPackage ./packages/'"${p}"' { macModel = "'"${model}"'"; }')"
 	built_drvs+=($(nnix show-derivation "${drv}" | jq -r '.[keys[0]].outputs | .[].path'))
 
 	echo ">>> Built '${p}' (-> '${drv}')"
